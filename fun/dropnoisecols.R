@@ -72,6 +72,7 @@ dropnoisecols = function(
     }
 
     # drop columns and add info to object.
+    # must match fun\correlatedfeatures-address.R
     for(idodrop in dodrop){
         
         # move data to the dropped column list.
@@ -83,7 +84,7 @@ dropnoisecols = function(
         x$dropped_cols[[idodrop$col]] <- idodrop
 
         if(verbose) print(glue('
-            Dropped column [{idodrop$col}] for reason [{idodrop$reason}].
+            Dropped column [{idodrop$col}] for reason [{idodrop$reason}]: {idodrop$info}.
         '))
 
         rm(idodrop)

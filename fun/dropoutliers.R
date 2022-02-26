@@ -5,7 +5,7 @@ dropoutliers = function(x, verbose = TRUE, checkabs = TRUE, run_autotype = TRUE,
     found = FALSE
 
     # check each numeric column and drop rows with outliers.
-    for(numcol in names(x$data)[which(x$classes %in% c('integer', 'numeric'))]){
+    for(numcol in names(x$data)[x$classes %in% c('integer', 'numeric')]){
 
         # search for outliers.
         
@@ -34,16 +34,16 @@ dropoutliers = function(x, verbose = TRUE, checkabs = TRUE, run_autotype = TRUE,
             x$initrows = x$initrows[-drop]
             x$data = x$data[-drop, ]
             
-            if(verbose) print(glue::glue('\t dropped [{length(drop)}] rows with outlier at [{numcol}]'))
+            if(verbose) print(glue::glue('\t dropped [{length(drop)}] rows with outlier at [{numcol}] > {round(cutoff, 4)}'))
             found = TRUE
 
         }
 
-        if(!found & verbose) print('\t No outliers found. ')
-
         rm(qs, cutoff, checkvals, drop)
 
     }
+
+    if(!found & verbose) print('\t No outliers found.')
 
     # return data and dropped rows.
     return(x)
